@@ -227,7 +227,7 @@ app.use('/admin', admin);
 
 //start the server
 app.listen(4000, function () {
-  console.log('server started at port 3306');
+  console.log('Server is running!');
 });
 
 module.exports = app;
