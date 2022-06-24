@@ -99,7 +99,7 @@ app.post('/', function (req, res) {
         if (!rows[0]) {
           res.render('view_login', {
             title: 'User Login',
-            message: 'Login Failed! Enter Correct Infromatins.',
+            message: 'Login Failed! Enter Correct Infromation.',
             message_type: 'alert-danger',
             errors: ''
           });
