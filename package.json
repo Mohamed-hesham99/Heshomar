@@ -4,7 +4,7 @@
   "description": "Simple Pharmacy Management System",
   "main": "index.js",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.4",
     "autoprefixer": "^10.4.7",
     "body-parser": "^1.17.2",
     "ejs": "^2.5.7",
