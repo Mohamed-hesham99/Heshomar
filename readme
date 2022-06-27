@@ -1,10 +1,15 @@
+
+npm install
+node app.js
+
+
 #Login Credentials
-Admin Panel :
+Admin View :
 
 username: admin
 password: admin
 
-Cashier:
+Staff/Cashier:
 
 username:staff
 password:staff
