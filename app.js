@@ -197,9 +197,8 @@ async.parallel([
     console.log(rows[2][0]);
 
 
-    // those data needs to be shown on view_admin.ejs
-    // Dashboard page requires those data
-    // NOT WORKING PROPERLY
+    
+    // Admin View 
 
     res.render('view_admin', {
         'totalSell': rows[0][0],
