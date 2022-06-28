@@ -1,61 +1,71 @@
--- phpMyAdmin SQL Dump
--- version 4.7.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Sep 18, 2017 at 11:05 PM
--- Server version: 10.1.22-MariaDB
--- PHP Version: 7.1.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com    Database: pharmacy
+-- ------------------------------------------------------
+-- Server version	8.0.28
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
+SET @@SESSION.SQL_LOG_BIN= 0;
 
 --
--- Database: `pharmacy`
+-- GTID state at the beginning of the backup 
 --
 
--- --------------------------------------------------------
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '';
 
 --
 -- Table structure for table `batch`
 --
 
+DROP TABLE IF EXISTS `batch`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `batch` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `Batch_ID` varchar(255) NOT NULL,
-  `Quantity` int(11) NOT NULL,
+  `Quantity` int NOT NULL,
   `Cost_Price` float NOT NULL,
   `Sell_Price` float NOT NULL,
   `Production_Date` date NOT NULL,
   `Expire_Date` date NOT NULL,
-  `Purchase_ID` int(11) NOT NULL,
-  `Medicine_ID` int(11) NOT NULL,
-  `Supplier_ID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Purchase_ID` int NOT NULL,
+  `Medicine_ID` int NOT NULL,
+  `Supplier_ID` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Supplier_ID` (`Supplier_ID`),
+  KEY `Medicine_ID` (`Medicine_ID`),
+  CONSTRAINT `batch_ibfk_1` FOREIGN KEY (`Supplier_ID`) REFERENCES `supplier` (`ID`),
+  CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`Medicine_ID`) REFERENCES `medicine_information` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`id`, `Batch_ID`, `Quantity`, `Cost_Price`, `Sell_Price`, `Production_Date`, `Expire_Date`, `Purchase_ID`, `Medicine_ID`, `Supplier_ID`) VALUES
-(1, '112', 20, 200, 555, '2017-09-12', '2017-09-30', 0, 1, 1);
-
--- --------------------------------------------------------
+LOCK TABLES `batch` WRITE;
+/*!40000 ALTER TABLE `batch` DISABLE KEYS */;
+INSERT INTO `batch` VALUES (1,'112',20,10000,25000,'2022-01-01','2025-01-01',0,1,1);
+/*!40000 ALTER TABLE `batch` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `bill_information`
 --
 
+DROP TABLE IF EXISTS `bill_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `bill_information` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `Invoice_No` varchar(255) NOT NULL,
   `Total_Amount` float NOT NULL,
   `Discount` varchar(10) NOT NULL,
@@ -63,357 +73,224 @@ CREATE TABLE `bill_information` (
   `Total_Payable` float NOT NULL,
   `Paid` float NOT NULL,
   `Returned` float NOT NULL,
-  `Date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `bill_information`
 --
 
-INSERT INTO `bill_information` (`id`, `Invoice_No`, `Total_Amount`, `Discount`, `Discount_Amount`, `Total_Payable`, `Paid`, `Returned`, `Date`) VALUES
-(1, '525', 1200, '10', 120, 1080, 1080, 0, '2017-09-06'),
-(2, 'IN-11143543444', 50, '5', 2.5, 47.5, 66, 18.5, '2017-09-23'),
-(3, '324', 60, '5', 3, 57, 100, 43, '2017-09-19'),
-(4, 'IN-101342434', 67, '3', 2.01, 64.99, 100, 35.01, '2017-09-29'),
-(5, 'IN-111213213', 17, '5', 0.85, 16.15, 34, 17.85, '2017-09-28'),
-(6, 'B1014', 30, '2', 0.6, 29.4, 25, -4.4, '2017-09-28'),
-(7, 'IN-111', 6, '2', 0.12, 5.88, 10, 4.12, '2017-09-19'),
-(8, 'New101', 4, '0', 0, 4, 5, 1, '2017-09-19'),
-(11, 'New-102', 4, '1', 0.04, 3.96, 23, 19.04, '2017-09-20'),
-(12, 'IN-1111', 62, '5', 3.1, 58.9, 100, 41.1, '2017-09-19');
-
--- --------------------------------------------------------
+LOCK TABLES `bill_information` WRITE;
+/*!40000 ALTER TABLE `bill_information` DISABLE KEYS */;
+INSERT INTO `bill_information` VALUES (1,'525',1200,'10',120,1080,1080,0,'2022-06-06'),(2,'IN-11143543444',50,'5',2.5,47.5,66,18.5,'2022-06-23'),(3,'324',60,'5',3,57,100,43,'2022-06-19'),(4,'IN-101342434',67,'3',2.01,64.99,100,35.01,'2022-06-29'),(5,'IN-111213213',17,'5',0.85,16.15,34,17.85,'2022-06-28'),(6,'B1014',30,'2',0.6,29.4,25,-4.4,'2022-06-28'),(7,'IN-111',6,'2',0.12,5.88,10,4.12,'2022-06-19'),(8,'New101',4,'0',0,4,5,1,'2022-06-19'),(11,'New-102',4,'1',0.04,3.96,23,19.04,'2022-06-20'),(12,'IN-1111',62,'5',3.1,58.9,100,41.1,'2022-06-19'),(13,'412',100,'10',0,0,42,12,'2022-06-25'),(14,'41241',800,'10',80,720,800,80,'2022-06-25');
+/*!40000 ALTER TABLE `bill_information` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `category`
 --
 
+DROP TABLE IF EXISTS `category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `category` (
-  `ID` int(11) NOT NULL,
-  `Category` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Category` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`ID`, `Category`) VALUES
-(6, 'Tablet'),
-(7, 'Suppository'),
-(8, 'Paediatric Drops'),
-(9, 'Suspension'),
-(10, 'Syrup'),
-(11, 'Cream'),
-(12, 'Vaginal Tablet'),
-(13, 'Eye Drops'),
-(14, 'Capsule'),
-(15, 'IM/IV Injection'),
-(16, 'IV Infusion'),
-(17, 'IS Injection'),
-(18, 'Sublingual Tablet'),
-(19, 'Spray'),
-(20, 'SC Injection'),
-(21, 'Nasal Drops'),
-(22, 'HFA Inhaler ');
-
--- --------------------------------------------------------
+LOCK TABLES `category` WRITE;
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (6,'Tablet'),(7,'Suppository'),(8,'Paediatric Drops'),(9,'Suspension'),(10,'Syrup'),(11,'Cream'),(12,'Vaginal Tablet'),(13,'Eye Drops'),(14,'Capsule'),(15,'IM/IV Injection'),(16,'IV Infusion'),(17,'IS Injection'),(18,'Sublingual Tablet'),(19,'Spray'),(20,'SC Injection'),(21,'Nasal Drops'),(22,'HFA Inhaler ');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `drug_generic_name`
 --
 
+DROP TABLE IF EXISTS `drug_generic_name`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `drug_generic_name` (
-  `ID` int(11) NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Generic_Name` varchar(255) NOT NULL,
-  `Description` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Description` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `drug_generic_name`
 --
 
-INSERT INTO `drug_generic_name` (`ID`, `Generic_Name`, `Description`) VALUES
-(3, 'PARACETAMOL (ACETAMINOPHEN)', 'Paracetamol 500mgs'),
-(4, 'PARACETAMOL + CAFFEINE', 'Paracetamol 500mg + Caffeine 65mg'),
-(5, 'Basak extract', 'Basak extract'),
-(6, 'PARACETAMOL + TRAMADOL', 'Paracetamol 325mg + Tramadol 37.5mg'),
-(7, 'DIPHENHYDRAMINE', 'Diphenhydramine 10mg/5ml'),
-(8, 'CLOTRIMAZOLE', 'Clotrimazole 10mg/gm'),
-(9, 'KETOTIFEN', 'Ketotifen Fumarate 0.025%'),
-(10, 'OLOPATADINE', 'Olopatadine 0.1%'),
-(11, 'CETIRIZINE', 'Cetirizine 10mg'),
-(12, 'ALBENDAZOLE', 'Albendazole 400mg'),
-(13, 'AMBRISENTAN', 'Ambrisentan 5mg'),
-(14, 'AMBROXOL', 'Ambroxol 75mg'),
-(15, 'AAA', 'VVB');
-
--- --------------------------------------------------------
+LOCK TABLES `drug_generic_name` WRITE;
+/*!40000 ALTER TABLE `drug_generic_name` DISABLE KEYS */;
+INSERT INTO `drug_generic_name` VALUES (3,'PARACETAMOL (ACETAMINOPHEN)','Paracetamol 500mgs'),(4,'PARACETAMOL + CAFFEINE','Paracetamol 500mg + Caffeine 65mg'),(5,'Basak extract','Basak extract'),(6,'PARACETAMOL + TRAMADOL','Paracetamol 325mg + Tramadol 37.5mg'),(7,'DIPHENHYDRAMINE','Diphenhydramine 10mg/5ml'),(8,'CLOTRIMAZOLE','Clotrimazole 10mg/gm'),(9,'KETOTIFEN','Ketotifen Fumarate 0.025%'),(10,'OLOPATADINE','Olopatadine 0.1%'),(11,'CETIRIZINE','Cetirizine 10mg'),(12,'ALBENDAZOLE','Albendazole 400mg'),(13,'AMBRISENTAN','Ambrisentan 5mg'),(14,'AMBROXOL','Ambroxol 75mg'),(15,'AAA','VVB');
+/*!40000 ALTER TABLE `drug_generic_name` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `manufacturer`
 --
 
+DROP TABLE IF EXISTS `manufacturer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `manufacturer` (
-  `ID` int(11) NOT NULL,
-  `Manufacturer_Name` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Manufacturer_Name` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `manufacturer`
 --
 
-INSERT INTO `manufacturer` (`ID`, `Manufacturer_Name`) VALUES
-(1, 'SQUARE'),
-(2, 'INCEPTA PHARMA'),
-(3, 'BEXIMCO'),
-(4, 'OPSONIN PHARMA'),
-(5, 'RENATA'),
-(6, 'ESKAYEF'),
-(7, 'ACME'),
-(8, 'A.C.I.'),
-(9, 'ARISTOPHARMA'),
-(10, 'DRUG INTERNATIONAL'),
-(11, 'HEALTHCARE PHARMA'),
-(12, 'ORION PHARMA LTD.');
-
--- --------------------------------------------------------
+LOCK TABLES `manufacturer` WRITE;
+/*!40000 ALTER TABLE `manufacturer` DISABLE KEYS */;
+INSERT INTO `manufacturer` VALUES (1,'SQUARE'),(2,'INCEPTA PHARMA'),(3,'BEXIMCO'),(4,'OPSONIN PHARMA'),(5,'RENATA'),(6,'ESKAYEF'),(7,'ACME'),(8,'A.C.I.'),(9,'ARISTOPHARMA'),(10,'DRUG INTERNATIONAL'),(11,'HEALTHCARE PHARMA'),(12,'ORION PHARMA LTD.'),(13,'test 1');
+/*!40000 ALTER TABLE `manufacturer` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `medicine_information`
 --
 
+DROP TABLE IF EXISTS `medicine_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `medicine_information` (
-  `ID` int(11) NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Medicine_Name` varchar(255) NOT NULL,
   `Category` varchar(255) NOT NULL,
-  `Generic_ID` int(11) NOT NULL,
-  `Manufacturer_ID` int(11) NOT NULL,
-  `Category_ID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Generic_ID` int NOT NULL,
+  `Manufacturer_ID` int NOT NULL,
+  `Category_ID` int NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Generic_ID` (`Generic_ID`),
+  KEY `Manufacturer_ID` (`Manufacturer_ID`),
+  KEY `Category_ID` (`Category_ID`),
+  CONSTRAINT `medicine_information_ibfk_1` FOREIGN KEY (`Generic_ID`) REFERENCES `drug_generic_name` (`ID`),
+  CONSTRAINT `medicine_information_ibfk_2` FOREIGN KEY (`Manufacturer_ID`) REFERENCES `manufacturer` (`ID`),
+  CONSTRAINT `medicine_information_ibfk_3` FOREIGN KEY (`Category_ID`) REFERENCES `category` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `medicine_information`
 --
 
-INSERT INTO `medicine_information` (`ID`, `Medicine_Name`, `Category`, `Generic_ID`, `Manufacturer_ID`, `Category_ID`) VALUES
-(1, 'ACE', '', 3, 1, 6),
-(3, 'ACETRAM', '', 6, 1, 6),
-(5, 'ADOVAS SYP 200', '', 5, 1, 10),
-(6, 'ADRYL SYP', '', 7, 1, 10),
-(7, 'AFUN CRM', '', 8, 1, 11),
-(8, 'ALACOT 0.025%', '', 9, 1, 13),
-(9, 'ALACOT 0.10%', '', 10, 1, 13),
-(10, 'ALMEX SUSP', '', 12, 1, 9),
-(11, 'AMBROX 75', '', 14, 1, 14);
-
--- --------------------------------------------------------
+LOCK TABLES `medicine_information` WRITE;
+/*!40000 ALTER TABLE `medicine_information` DISABLE KEYS */;
+INSERT INTO `medicine_information` VALUES (1,'ACE','',3,1,6),(3,'ACETRAM','',6,1,6),(5,'ADOVAS SYP 200','',5,1,10),(6,'ADRYL SYP','',7,1,10),(7,'AFUN CRM','',8,1,11),(8,'ALACOT 0.025%','',9,1,13),(9,'ALACOT 0.10%','',10,1,13),(10,'ALMEX SUSP','',12,1,9),(11,'AMBROX 75','',14,1,14);
+/*!40000 ALTER TABLE `medicine_information` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `supplier`
 --
 
+DROP TABLE IF EXISTS `supplier`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `supplier` (
-  `ID` int(11) NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Supplier_Name` varchar(50) NOT NULL,
   `Contact` varchar(20) NOT NULL,
-  `Email` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Email` varchar(50) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`ID`, `Supplier_Name`, `Contact`, `Email`) VALUES
-(1, 'SQUARE 1', '45782222', 'square@gmail.com'),
-(2, 'SQUARE 2', '666445435', 'square2@gmail.com'),
-(3, 'SQUARE 3', '123445', 'square@gmail.com');
-
--- --------------------------------------------------------
+LOCK TABLES `supplier` WRITE;
+/*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
+INSERT INTO `supplier` VALUES (1,'SQUARE 1','45782222','square@gmail.com'),(2,'SQUARE 2','666445435','square2@gmail.com'),(3,'SQUARE 3','123445','square@gmail.com');
+/*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_access`
 --
 
+DROP TABLE IF EXISTS `user_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_access` (
   `Username` varchar(25) NOT NULL,
   `Password` varchar(32) NOT NULL,
-  `Usertype` varchar(10) NOT NULL
+  `Usertype` varchar(10) NOT NULL,
+  PRIMARY KEY (`Username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `user_access`
 --
 
-INSERT INTO `user_access` (`Username`, `Password`, `Usertype`) VALUES
-('Admin', 'Admin', 'Admin'),
-('bappy', 'bappy', 'Admin'),
-('Staff', 'Staff', 'Staff'),
-('tusar', 'tusar', 'Admin');
-
--- --------------------------------------------------------
+LOCK TABLES `user_access` WRITE;
+/*!40000 ALTER TABLE `user_access` DISABLE KEYS */;
+INSERT INTO `user_access` VALUES ('Admin','Admin','Admin'),('bappy','bappy','Admin'),('Staff','Staff','Staff'),('tusar','tusar','Admin');
+/*!40000 ALTER TABLE `user_access` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_information`
 --
 
+DROP TABLE IF EXISTS `user_information`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user_information` (
-  `ID` int(11) NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) NOT NULL,
   `Email` varchar(50) NOT NULL,
   `Gender` varchar(10) NOT NULL,
   `Date_of_Birth` date NOT NULL,
-  `Age` int(11) NOT NULL,
+  `Age` int NOT NULL,
   `Address` varchar(255) NOT NULL,
-  `Contact` int(11) NOT NULL,
+  `Contact` int NOT NULL,
   `Blood_Group` varchar(15) NOT NULL,
   `Marital_Status` varchar(10) NOT NULL,
   `Join_Date` date NOT NULL,
-  `Salary` int(11) NOT NULL,
-  `Username` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `Salary` int NOT NULL,
+  `Username` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `Username` (`Username`),
+  CONSTRAINT `user_information_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `user_access` (`Username`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `user_information`
 --
 
-INSERT INTO `user_information` (`ID`, `Name`, `Email`, `Gender`, `Date_of_Birth`, `Age`, `Address`, `Contact`, `Blood_Group`, `Marital_Status`, `Join_Date`, `Salary`, `Username`) VALUES
-(3, 'bappy', 'bappy@gmail.com', 'Male', '2017-09-19', 24, 'dhaka, mirpur11', 100000, 'B+', 'Unmarried', '2017-09-27', 777, 'bappy'),
-(4, 'Tusar', 'tusar@gmail.com', 'Male', '2017-09-13', 24, 'dhaka', 123445, 'A+', 'Married', '2017-09-27', 222, 'tusar');
+LOCK TABLES `user_information` WRITE;
+/*!40000 ALTER TABLE `user_information` DISABLE KEYS */;
+INSERT INTO `user_information` VALUES (3,'bappy','bappy@gmail.com','Male','2017-09-19',24,'dhaka, mirpur11',100000,'B+','Unmarried','2017-09-27',777,'bappy'),(4,'Tusar','tusar@gmail.com','Male','2017-09-13',24,'dhaka',123445,'A+','Married','2017-09-27',222,'tusar');
+/*!40000 ALTER TABLE `user_information` ENABLE KEYS */;
+UNLOCK TABLES;
+SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `batch`
---
-ALTER TABLE `batch`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `Supplier_ID` (`Supplier_ID`),
-  ADD KEY `Medicine_ID` (`Medicine_ID`);
-
---
--- Indexes for table `bill_information`
---
-ALTER TABLE `bill_information`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `category`
---
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `drug_generic_name`
---
-ALTER TABLE `drug_generic_name`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `manufacturer`
---
-ALTER TABLE `manufacturer`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `medicine_information`
---
-ALTER TABLE `medicine_information`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Generic_ID` (`Generic_ID`),
-  ADD KEY `Manufacturer_ID` (`Manufacturer_ID`),
-  ADD KEY `Category_ID` (`Category_ID`);
-
---
--- Indexes for table `supplier`
---
-ALTER TABLE `supplier`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Indexes for table `user_access`
---
-ALTER TABLE `user_access`
-  ADD PRIMARY KEY (`Username`);
-
---
--- Indexes for table `user_information`
---
-ALTER TABLE `user_information`
-  ADD PRIMARY KEY (`ID`),
-  ADD KEY `Username` (`Username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `batch`
---
-ALTER TABLE `batch`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `bill_information`
---
-ALTER TABLE `bill_information`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `category`
---
-ALTER TABLE `category`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
---
--- AUTO_INCREMENT for table `drug_generic_name`
---
-ALTER TABLE `drug_generic_name`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
---
--- AUTO_INCREMENT for table `manufacturer`
---
-ALTER TABLE `manufacturer`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `medicine_information`
---
-ALTER TABLE `medicine_information`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
---
--- AUTO_INCREMENT for table `supplier`
---
-ALTER TABLE `supplier`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `user_information`
---
-ALTER TABLE `user_information`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `batch`
---
-ALTER TABLE `batch`
-  ADD CONSTRAINT `batch_ibfk_1` FOREIGN KEY (`Supplier_ID`) REFERENCES `supplier` (`ID`),
-  ADD CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`Medicine_ID`) REFERENCES `medicine_information` (`ID`);
-
---
--- Constraints for table `medicine_information`
---
-ALTER TABLE `medicine_information`
-  ADD CONSTRAINT `medicine_information_ibfk_1` FOREIGN KEY (`Generic_ID`) REFERENCES `drug_generic_name` (`ID`),
-  ADD CONSTRAINT `medicine_information_ibfk_2` FOREIGN KEY (`Manufacturer_ID`) REFERENCES `manufacturer` (`ID`),
-  ADD CONSTRAINT `medicine_information_ibfk_3` FOREIGN KEY (`Category_ID`) REFERENCES `category` (`ID`);
-
---
--- Constraints for table `user_information`
---
-ALTER TABLE `user_information`
-  ADD CONSTRAINT `user_information_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `user_access` (`Username`);
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-06-28 21:26:12
