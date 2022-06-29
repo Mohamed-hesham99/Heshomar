@@ -1,4 +1,5 @@
 var mysql = require('mysql');
+// database connection:
 
 module.exports = {
     getData: function(sql, param, callback){
@@ -15,7 +16,6 @@ module.exports = {
             {
                 console.log('error connecting database ...');
             }
-            console.log("Database Connected");
         });
         if(param == null)
         {

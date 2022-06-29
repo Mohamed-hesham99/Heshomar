@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var expressSession = require('express-session');
 var db = require('./db');
-//var hbs = require('express-handlebars');
 var path = require('path');
 var mysql = require('mysql');
 var async = require('async');
@@ -14,10 +13,10 @@ var app = express();
 //configuration
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-//app.engine('hbs', hbs({defaultLayout: 'main'}));
 
-//app.set('view engine', 'hbs');
-//use middleware
+
+
+// middleware
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -72,7 +71,7 @@ app.get('/', function (req, res) {
 app.post('/', function (req, res) {
 
 
-  //login validations
+  // credentials validations 
   req.checkBody('username', 'Username is required').notEmpty();
   req.checkBody('password', 'Password is required').notEmpty();
 
@@ -99,7 +98,7 @@ app.post('/', function (req, res) {
         if (!rows[0]) {
           res.render('view_login', {
             title: 'User Login',
-            message: 'Login Failed! Enter Correct Infromation.',
+            message: 'Login Failed! Enter Correct Infromatins.',
             message_type: 'alert-danger',
             errors: ''
           });
@@ -138,10 +137,7 @@ app.get('/admin', function (req, res) {
   }
 
 
-  // IMPORTANT ROUTING NOTE ******************************
-  // add the below code in admin.js => router.get('/')  **
-  // exectly same code needs there to work properly     **
-  // *****************************************************
+
 
   var connection = mysql.createConnection({
     host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
@@ -197,8 +193,7 @@ async.parallel([
     console.log(rows[2][0]);
 
 
-    
-    // Admin View 
+    // display on admin-view
 
     res.render('view_admin', {
         'totalSell': rows[0][0],
@@ -220,13 +215,13 @@ async.parallel([
 
 
 
-// routes
 app.use('/admin', admin);
 
 
 //start the server
-app.listen(4000, function () {
-  console.log('Server is running!');
+
+app.listen(5000, function () {
+  console.log('server is running at port 5000');
 });
 
 module.exports = app;
