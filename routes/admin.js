@@ -32,10 +32,9 @@ router.use('*', function (req, res, next) {
 router.get('/', function (req, res) {
 
     var connection = mysql.createConnection({
-        host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-        port: '3306',
-        user: 'admin',
-        password: 'adminadmin',
+        host: 'localhost',
+        user: 'root',
+        password: '',
         database: 'pharmacy'
     });
     
@@ -85,9 +84,7 @@ router.get('/', function (req, res) {
         console.log(rows[2][0]);
     
     
-        // those data needs to be shown on view_admin.ejs
-        // Dashboard page requires those data
-        // NOT WORKING PROPERLY
+        //view admin and dashboard data 
     
         res.render('view_admin', {
             'totalSell': rows[0][0],
@@ -104,9 +101,7 @@ router.get('/', function (req, res) {
     });
     
 
-    // res.render('view_admin', {
-    //     user: req.session.loggedUser
-    // });
+    
 });
 
 
@@ -350,10 +345,9 @@ router.get('/batch/create', function (req, res) {
     check_staff(req, res);
 
     var connection = mysql.createConnection({
-        host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-        port: '3306',
-        user: 'admin',
-        password: 'adminadmin',
+        host: 'localhost',
+        user: 'root',
+        password: '',
         database: 'pharmacy'
     });
 
@@ -367,7 +361,7 @@ router.get('/batch/create', function (req, res) {
             connection.query(supplier, callback)
         }
     ], function (err, rows) {
-        //console.log(RowDataPacket);
+        
         res.render('batch_create', {
             medicinename: rows[0][0],
             suppliername: rows[1][0],
@@ -399,10 +393,9 @@ router.post('/batch/create', function (req, res) {
         if (!result.isEmpty()) {
 
             var connection = mysql.createConnection({
-                host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-                port: '3306',
-                user: 'admin',
-                password: 'adminadmin',
+                host: 'localhost',
+                user: 'root',
+                password: '',
                 database: 'pharmacy'
             });
 
@@ -416,7 +409,7 @@ router.post('/batch/create', function (req, res) {
                     connection.query(supplier, callback)
                 }
             ], function (err, rows) {
-                //console.log(RowDataPacket);
+                
                 res.render('batch_create', {
                     medicinename: rows[0][0],
                     suppliername: rows[1][0],
@@ -838,10 +831,9 @@ router.get('/medicine/create', function (req, res) {
     check_staff(req, res);
 
     var connection = mysql.createConnection({
-        host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-        port: '3306',
-        user: 'admin',
-        password: 'adminadmin',
+        host: 'localhost',
+        user: 'root',
+        password: '',
         database: 'pharmacy'
     });
 
@@ -859,7 +851,7 @@ router.get('/medicine/create', function (req, res) {
             connection.query(category, callback)
         }
     ], function (err, rows) {
-        //console.log(RowDataPacket);
+        
         res.render('medicine_create', {
             genericname: rows[0][0],
             manufacturername: rows[1][0],
@@ -890,10 +882,9 @@ router.post('/medicine/create', function (req, res) {
         if (!result.isEmpty()) {
 
             var connection = mysql.createConnection({
-                host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-                port: '3306',
-                user: 'admin',
-                password: 'adminadmin',
+                host: 'localhost',
+                user: 'root',
+                password: '',
                 database: 'pharmacy'
             });
 
@@ -952,10 +943,9 @@ router.get('/medicine/edit/:id', function (req, res) {
     check_staff(req, res);
 
     var connection = mysql.createConnection({
-        host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-        port: '3306',
-        user: 'admin',
-        password: 'adminadmin',
+        host: 'localhost',
+        user: 'root',
+        password: '',
         database: 'pharmacy'
     });
 
@@ -1016,10 +1006,9 @@ router.post('/medicine/edit/:id', function (req, res) {
         if (!result.isEmpty()) {
 
             var connection = mysql.createConnection({
-                host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-                port: '3306',
-                user: 'admin',
-                password: 'adminadmin',
+                host: 'localhost',
+                user: 'root',
+                password: '',
                 database: 'pharmacy'
             });
 
@@ -1422,15 +1411,9 @@ router.post('/add_batch/:id', function (req, res) {
         medicine_id: req.body.medicine_id
     };
     console.log(batchInfo);
-    //var query = "SELECT * FROM medicine_information WHERE medicine_id = ?";
-    //db.getData(query, [id], function (rows) {
-    //    var data = {'mname': rows[0]};
-    //    res.render('view_add_batch', data);
+    
     res.redirect('/admin/add_medicine');
-    //});
+   
 });
-
-
-
 
 module.exports = router;

@@ -1,12 +1,12 @@
 var mysql = require('mysql');
+// database connection:
 
 module.exports = {
     getData: function(sql, param, callback){
         var connection = mysql.createConnection({
-            host: 'pharmacy.cvhqkkyrqcea.eu-central-1.rds.amazonaws.com',
-            port: '3306',
-            user: 'admin',
-            password: 'adminadmin',
+            host: 'localhost',
+            user: 'root',
+            password: '',
             database: 'pharmacy'
         });
 
@@ -15,7 +15,6 @@ module.exports = {
             {
                 console.log('error connecting database ...');
             }
-            console.log("Database Connected");
         });
         if(param == null)
         {
