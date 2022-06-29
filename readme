@@ -1,7 +1,26 @@
 # Heshomar pharmacy management system
 
-npm install
-node app.js
+Technical Stack:
+
+Node
+Express
+MySql
+EJS
+
+run the project:
+
+*Import database into phpmyadmin(Apache Server) and name it "pharmacy"
+
+$ git clone https://github.com/Mohamed-hesham99/Heshomar.git
+
+$ cd Heshomar
+
+$ npm install
+
+$ npm nodemon app.js
+
+
+http://localhost:5000/
 
 
 #Login Credentials
