@@ -7,20 +7,21 @@ Express
 MySql
 EJS
 
+
+## 🚀 Build Instructions / How to start the project 
+
+1) Downloard/clone the project
+2) Import database into phpmyadmin(Apache Server) and name it "pharmacy"
+3) Open terminal/command prompt 
+4) cd (change directory) in to the project folder
+5) Run `npm install` in your terminal
+6) Run `node app.js` 
+7) Open your browser and navigate to `http://localhost:5000/`
 run the project:
 
-*Import database into phpmyadmin(Apache Server) and name it "pharmacy"
-
-$ git clone https://github.com/Mohamed-hesham99/Heshomar.git
-
-$ cd Heshomar
-
-$ npm install
-
-$ npm nodemon app.js
 
 
-http://localhost:5000/
+
 
 
 #Login Credentials
