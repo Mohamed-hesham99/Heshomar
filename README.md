@@ -1,4 +1,6 @@
-## Graduation Project:
+## Graduation Project
+
+
 # Pharmacy Management System
 
 A simple management system build using Node.js and MySQL
